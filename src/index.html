@@ -42,11 +42,11 @@
         <h3 class="popup__title">Редактировать профиль</h3>
         <form class="popup__form" name="edit-profile" novalidate>
           <input type="text" name="name" id="name" class="popup__input popup__input_type_name" placeholder="Имя"
-            required minlength="2" maxlength="40" pattern="[A-Za-zА-Яа-яЁё\s-]+"
+            required minlength="2" maxlength="40" pattern="[A-Za-zА-Яа-яЁё\s\-]+"
             data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
           <span class="name-error popup__error"></span>
           <input type="text" name="description" id="description" class="popup__input popup__input_type_description"
-            placeholder="Занятие" required minlength="2" maxlength="200" pattern="[A-Za-zА-Яа-яЁё\s-]+"
+            placeholder="Занятие" required minlength="2" maxlength="200" pattern="[A-Za-zА-Яа-яЁё\s\-]+"
             data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
           <span class="description-error popup__error"></span>
           <button type="submit" class="button popup__button">Сохранить</button>
@@ -59,7 +59,7 @@
         <h3 class="popup__title">Новое место</h3>
         <form class="popup__form" name="new-place" novalidate>
           <input type="text" name="place-name" id="place-name" class="popup__input popup__input_type_card-name"
-            placeholder="Название" required minlength="2" maxlength="30" pattern="[A-Za-zА-Яа-яЁё\s-]+"
+            placeholder="Название" required minlength="2" maxlength="30" pattern="[A-Za-zА-Яа-яЁё\s\-]+"
             data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
           <span class="place-name-error popup__error"></span>
           <input type="url" name="link" id="link" class="popup__input popup__input_type_url"

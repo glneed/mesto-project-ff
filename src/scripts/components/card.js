@@ -12,6 +12,10 @@ function renderLikes(likeCountElement, likeButton, likes, userId) {
   }
 }
 
+export function removeCard(cardElement) {
+  cardElement.remove();
+}
+
 export function createCard(cardData, currentUserId, handlers = {}) {
   const { onImageClick, onDeleteClick, onLikeClick } = handlers;
  
