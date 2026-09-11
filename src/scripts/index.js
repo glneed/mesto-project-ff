@@ -1,9 +1,17 @@
 import '../pages/index.css';
 
-import { createCard } from './components/card.js';
+import { createCard, removeCard } from './components/card.js';
 import { openModal, closeModal } from './components/modal.js';
 import { enableValidation, clearValidation } from './components/validation.js';
-import api from './utils/api.js';
+import {
+  getUserInfo,
+  getInitialCards,
+  updateUserInfo,
+  addCard,
+  deleteCard,
+  changeLikeCardStatus,
+  updateAvatar,
+} from './components/api.js';
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -65,15 +73,15 @@ function handleCardImageClick(cardData) {
 }
 
 function handleDeleteCard(cardId, cardElement) {
-  api.deleteCard(cardId)
+  deleteCard(cardId)
     .then(() => {
-      cardElement.remove();
+      removeCard(cardElement);
     })
     .catch((err) => console.log(err));
 }
 
 function handleLikeCard(cardId, shouldLike, updateCard) {
-  api.changeLikeCardStatus(cardId, shouldLike)
+  changeLikeCardStatus(cardId, shouldLike)
     .then((updatedCardData) => {
       updateCard(updatedCardData);
     })
@@ -102,7 +110,7 @@ function handleEditProfileSubmit(evt) {
   const originalButtonText = editProfileSubmitButton.textContent;
   editProfileSubmitButton.textContent = 'Сохранение...';
 
-  api.updateUserInfo({
+  updateUserInfo({
     name: nameInput.value,
     about: descriptionInput.value,
   })
@@ -131,15 +139,13 @@ function handleNewPlaceSubmit(evt) {
   const originalButtonText = newPlaceSubmitButton.textContent;
   newPlaceSubmitButton.textContent = 'Создание...';
 
-  api.addCard({
+  addCard({
     name: placeNameInput.value,
     link: placeLinkInput.value,
   })
     .then((cardData) => {
       renderCard(cardData, placesList, 'prepend');
       closeModal(popupNewCard);
-      formNewPlace.reset();
-      clearValidation(formNewPlace, validationConfig);
     })
     .catch((err) => console.log(err))
     .finally(() => {
@@ -161,7 +167,7 @@ function handleEditAvatarSubmit(evt) {
   const originalButtonText = editAvatarSubmitButton.textContent;
   editAvatarSubmitButton.textContent = 'Сохранение...';
 
-  api.updateAvatar({ avatar: avatarLinkInput.value })
+  updateAvatar({ avatar: avatarLinkInput.value })
     .then((userData) => {
       profileImage.style.backgroundImage = `url(${userData.avatar})`;
       closeModal(popupAvatar);
@@ -174,7 +180,7 @@ function handleEditAvatarSubmit(evt) {
 
 formEditAvatar.addEventListener('submit', handleEditAvatarSubmit);
 
-Promise.all([api.getUserInfo(), api.getInitialCards()])
+Promise.all([getUserInfo(), getInitialCards()])
   .then(([userData, cards]) => {
     currentUserId = userData._id;
 
